@@ -1,0 +1,5 @@
+.clangd
+vcpkg_installed
+build
+.cache
+CMakeUserPresets.json
