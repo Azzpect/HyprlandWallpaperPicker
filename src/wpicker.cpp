@@ -99,7 +99,6 @@ void WPicker::WallpaperPicker::preload() {
 }
 
 void WPicker::WallpaperPicker::setWallpaper() {
-  std::cout << "setting wallpapper: " + imgPaths[active];
   pid_t pid = fork();
 
   std::string script =
