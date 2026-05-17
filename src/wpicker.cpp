@@ -42,6 +42,16 @@ WPicker::WallpaperPicker::WallpaperPicker() {
     }
   }
 
+  for (size_t i = 0; i < imgPaths.size(); i++) {
+    for (size_t j = i; j < imgPaths.size()-1; j++) {
+      if (imgPaths[j].compare(imgPaths[j+1]) > 0) {
+        std::string temp = imgPaths[j];
+        imgPaths[j] = imgPaths[j+1];
+        imgPaths[j+1] = temp;
+      }
+    }
+  }
+
   for (int i = 0; i < std::min(3, (int)imgPaths.size()); i++) {
     imgObjs[i] = cv::imread(imgPaths[i]);
   }
