@@ -43,7 +43,7 @@ WPicker::WallpaperPicker::WallpaperPicker() {
   }
 
   for (size_t i = 0; i < imgPaths.size(); i++) {
-    for (size_t j = i; j < imgPaths.size()-1; j++) {
+    for (size_t j = 0; j < imgPaths.size()-i-1; j++) {
       if (imgPaths[j].compare(imgPaths[j+1]) > 0) {
         std::string temp = imgPaths[j];
         imgPaths[j] = imgPaths[j+1];
