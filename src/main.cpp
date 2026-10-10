@@ -4,15 +4,10 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/opencv.hpp>
-#include <thread>
 
 int main() {
 
   WPicker::WallpaperPicker wpicker = WPicker::WallpaperPicker();
-
-
-  std::thread t(&WPicker::WallpaperPicker::preload, &wpicker);
-  t.detach();
 
   while (1) {
 

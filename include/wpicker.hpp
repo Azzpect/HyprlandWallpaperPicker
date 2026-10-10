@@ -23,13 +23,13 @@ namespace WPicker {
     cv::Size NotActiveImageSize = cv::Size(355 * 0.7, 200 * 0.7);
     std::vector<std::string> imgPaths;
     std::vector<cv::Mat> imgObjs;
+    void updateCache();
 
     public:
     WallpaperPicker();
     ~WallpaperPicker() = default;
 
     void render();
-    void preload();
     void leftShift();
     void rightShift();
     void setWallpaper();

@@ -5,6 +5,7 @@
 #include <opencv2/core/types.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/opencv.hpp>
+#include <opencv2/videoio.hpp>
 #include <unistd.h>
 
 WPicker::WallpaperPicker::WallpaperPicker() {
@@ -34,7 +35,7 @@ WPicker::WallpaperPicker::WallpaperPicker() {
   for (const auto &entry : std::filesystem::directory_iterator(dir)) {
     if (entry.is_regular_file()) {
       auto ext = entry.path().extension().string();
-      if (ext == ".jpg" || ext == ".png" || ext == ".jpeg") {
+      if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif") {
         this->imgPaths.push_back(entry.path());
         cv::Mat obj;
         this->imgObjs.push_back(obj);
@@ -43,11 +44,11 @@ WPicker::WallpaperPicker::WallpaperPicker() {
   }
 
   for (size_t i = 0; i < imgPaths.size(); i++) {
-    for (size_t j = 0; j < imgPaths.size()-i-1; j++) {
-      if (imgPaths[j].compare(imgPaths[j+1]) > 0) {
+    for (size_t j = 0; j < imgPaths.size() - i - 1; j++) {
+      if (imgPaths[j].compare(imgPaths[j + 1]) > 0) {
         std::string temp = imgPaths[j];
-        imgPaths[j] = imgPaths[j+1];
-        imgPaths[j+1] = temp;
+        imgPaths[j] = imgPaths[j + 1];
+        imgPaths[j + 1] = temp;
       }
     }
   }
@@ -98,13 +99,21 @@ void WPicker::WallpaperPicker::render() {
   }
 
   cv::imshow("WallpaperPicker", canvas);
+  updateCache();
 }
 
-void WPicker::WallpaperPicker::preload() {
-  for (int i = active + 2; i < (int)imgPaths.size(); i++) {
-    if (imgObjs[i].empty()) {
-      imgObjs[i] = cv::imread(imgPaths[i]);
-    }
+void WPicker::WallpaperPicker::updateCache() {
+  if (active + 2 <= (int)imgPaths.size() - 1 && imgObjs[active + 2].empty()) {
+    imgObjs[active + 2] = cv::imread(imgPaths[active + 2]);
+  }
+  if (active - 2 >= 0 && imgObjs[active - 2].empty()) {
+    imgObjs[active - 2] = cv::imread(imgPaths[active - 2]);
+  }
+  if (active + 3 <= (int)imgPaths.size() - 1 && !imgObjs[active + 3].empty()) {
+    imgObjs[active + 3].release();
+  }
+  if (active - 3 >= 0 && !imgObjs[active - 3].empty()) {
+    imgObjs[active - 3].release();
   }
 }
 
