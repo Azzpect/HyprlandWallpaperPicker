@@ -1,8 +1,10 @@
 #include "wpicker.hpp"
 #include <filesystem>
 #include <fstream>
+#include <opencv2/core/hal/interface.h>
 #include <opencv2/core/mat.hpp>
 #include <opencv2/core/types.hpp>
+#include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/videoio.hpp>
@@ -137,4 +139,18 @@ void WPicker::WallpaperPicker::leftShift() {
 
 void WPicker::WallpaperPicker::rightShift() {
   active = std::max(0, active - 1);
+}
+
+void WPicker::WallpaperPicker::showFilterBox() {
+  cv::Mat window = cv::Mat(FilterBoxSize.height, FilterBoxSize.width, CV_8UC3, background);
+  cv::namedWindow(FilterWindowName, cv::WINDOW_AUTOSIZE);
+  cv::Rect rect = cv::getWindowImageRect("WallpaperPicker");
+
+  std::cout << rect.x << "," << rect.y << std::endl;
+
+  int x = rect.x + (rect.width - FilterBoxSize.width) / 2;
+  int y = rect.y + (rect.height - FilterBoxSize.height) / 2;
+
+  cv::imshow(FilterWindowName, window);
+  cv::moveWindow(FilterWindowName, x, y);
 }

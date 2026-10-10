@@ -21,6 +21,8 @@ namespace WPicker {
     cv::Scalar background = cv::Scalar(255, 255, 255);
     cv::Size ActiveImageSize = cv::Size(355, 200);
     cv::Size NotActiveImageSize = cv::Size(355 * 0.7, 200 * 0.7);
+    std::string FilterWindowName = "FilterBox";
+    cv::Size FilterBoxSize = cv::Size(300, 30);
     std::vector<std::string> imgPaths;
     std::vector<cv::Mat> imgObjs;
     void updateCache();
@@ -30,6 +32,7 @@ namespace WPicker {
     ~WallpaperPicker() = default;
 
     void render();
+    void showFilterBox();
     void leftShift();
     void rightShift();
     void setWallpaper();

@@ -24,7 +24,12 @@ int main() {
       } else if (k == (int)'h') {
         wpicker.rightShift();
         break;
-      } else if (k == (int)'q') {
+      } else if (k == (int)'/') {
+        wpicker.showFilterBox(); 
+        cv::waitKey(0);
+        break;
+      }
+      else if (k == (int)'q') {
         exit(0);
       }
       break;
